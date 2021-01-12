@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "poc-fronted"
+  "defaultProject": "poc-fronted",
+  "cli": {
+    "analytics": false
+  }
 }

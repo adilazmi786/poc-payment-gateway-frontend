@@ -7,13 +7,10 @@
     width: 100%;
   }
 .div1 {
-    margin: 10px 10px;
+    margin: 100px 100px;
 }
-
-.div2 {
-    margin: 10px 10px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    flex-direction: column;
+.three-c-iframe{
+    display:flex;
+    width: 60vw;
+    height: 100vh;
 }
