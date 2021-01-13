@@ -16,12 +16,18 @@ export class ThreecauthorisationComponent implements OnInit {
   merchantRef: any;
   payResponse: any;
   token: any;
+  txnId: any;
+  refundRes: any;
+  authCode: any;
   ngOnInit(): void {
     debugger;
     let response = document.location.search;
-    this.authResponse = response.replace(/[^\w\s]/gi, " ").trim();
+    this.authResponse = response.replace(/[^-\w\s]/gi, " ").trim().split(" ");
 
-    this.merchantRef = this.authResponse.split(" ")[1];
+    this.merchantRef = this.authResponse[1];
+    this.txnId = this.authResponse[3];
+    this.authCode = this.authResponse[5];
+
     console.log("authResponse" + this.authResponse[0]);
 
     // call pay api
@@ -38,17 +44,29 @@ export class ThreecauthorisationComponent implements OnInit {
       debugger;
       this.payResponse = response;
       localStorage.setItem("token", this.payResponse.tokenNo);
+      //localStorage.setItem("txnId", this.payResponse.txStateText);
+
       alert(this.payResponse.txStateText);
     });
   }
 
   payWithToken() {
     let amount = 1300;
-    this.token = localStorage.getItem("token");
-    this.service.payWithToken(this.merchantRef, amount, this.token).subscribe(response => {
+    //this.token = localStorage.getItem("token");
+    this.service.payWithToken(this.txnId, amount).subscribe(response => {
       debugger;
       this.payResponse = response;
       alert(this.payResponse.txStateText);
+    });
+  }
+
+  reverseTransaction() {
+    debugger;
+    //let txnId = localStorage.getItem("txnId");
+    this.service.reverseTransaction(this.txnId).subscribe(res => {
+      debugger;
+      this.refundRes = res;
+      alert(this.refundRes.txStateText);
     });
   }
 

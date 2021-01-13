@@ -8,6 +8,7 @@ import { WebApiProvider } from '../provider';
 @Injectable({ providedIn: 'root' })
 export class ApiCoreService {
 
+
     constructor(private webApiProvider: WebApiProvider) { }
 
     getIpgSession(merchantRef: string, amount: string): Observable<any> {
@@ -22,8 +23,12 @@ export class ApiCoreService {
         return this.webApiProvider.get(environment.apiBaseUrl + '/threecpay/pay/' + merchantRef + '/' + amount);
     }
 
-    payWithToken(merchantRef: any, amount: number, token: string) {
-        return this.webApiProvider.get(environment.apiBaseUrl + '/threecpay/payWithToken/' + merchantRef + '/' + amount + "?token=" + token);
+    payWithToken(txnId: any, amount: number) {
+        return this.webApiProvider.get(environment.apiBaseUrl + '/threecpay/payWithToken/' + txnId + '/' + amount);
+    }
+
+    reverseTransaction(txnId: string | null) {
+        return this.webApiProvider.get(environment.apiBaseUrl + '/threecpay/reverse-capture/' + txnId);
     }
 
 
